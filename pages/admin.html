@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ダッシュボード</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h2>学校管理システム - 管理者</h2>
+        <div class="user-section">
+            <span class="user-name" id="userName">ユーザー</span>
+            <button class="btn btn-secondary" onclick="logout()">ログアウト</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="layout">
+          
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h3>メニュー</h3>
+                <a class="sidebar-item active" data-page="dashboard" href="admin.html#dashboard" target="_blank" rel="noopener">ダッシュボード</a>
+                <a class="sidebar-item" data-page="students" href="admin.html#students" target="_blank" rel="noopener">学生管理</a>
+                <a class="sidebar-item" data-page="teachers" href="admin.html#teachers" target="_blank" rel="noopener">教師管理</a>
+                <a class="sidebar-item" data-page="classes" href="admin.html#classes" target="_blank" rel="noopener">クラス管理</a>
+                <a class="sidebar-item" data-page="accounts" href="admin.html#accounts" target="_blank" rel="noopener">アカウント管理</a>
+                <a class="sidebar-item" data-page="timetable" href="admin.html#timetable" target="_blank" rel="noopener">時間割管理</a>
+                <a class="sidebar-item" data-page="notices" href="admin.html#notices" target="_blank" rel="noopener">お知らせ作成</a>
+                <a class="sidebar-item" data-page="attendance" href="admin.html#attendance" target="_blank" rel="noopener">出席状況</a>
+            </div>
+            <!-- Main Content -->
+            <div class="main-content">
+
+                <!-- ダッシュボード -->
+                
+                <div id="dashboard" class="page active">
+                    <h2>ダッシュボード</h2>
+                    <div class="card-grid">
+                                <div class="card clickable" onclick="showPage('students')" role="button" tabindex="0">
+                            <h3>総学生数</h3>
+                            <p class="stat-number" id="totalStudents">0</p>
+                        </div>
+                        <div class="card clickable" onclick="showPage('teachers')" role="button" tabindex="0">
+                            <h3>総教師数</h3>
+                            <p class="stat-number" id="totalTeachers">0</p>
+                        </div>
+                        <div class="card clickable" onclick="showPage('classes')" role="button" tabindex="0">
+                            <h3>総クラス数</h3>
+                            <p class="stat-number" id="totalClasses">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 学生管理 -->
+                <div id="students" class="page">
+                    <h2>学生管理</h2>
+                    <button class="btn btn-primary" onclick="openStudentModal()">学生を追加</button>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>学生ID</th>
+                                <th>名前</th>
+                                <th>メール</th>
+                                <th>クラス</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsList">
+                            <!-- 学生リストがここに表示される -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 教師管理 -->
+                <div id="teachers" class="page">
+                    <h2>教師管理</h2>
+                    <button class="btn btn-primary" onclick="openTeacherModal()">教師を追加</button>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>教師ID</th>
+                                <th>名前</th>
+                                <th>メール</th>
+                                <th>担当科目</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teachersList">
+                            <!-- 教師リストがここに表示される -->
+                           
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- クラス管理 -->
+               
+                <div id="classes" class="page">
+                    <h2>クラス管理</h2>
+                    <button class="btn btn-primary" onclick="openClassModal()">クラスを作成</button>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>クラスID</th>
+                                <th>クラス名</th>
+                                <th>担任</th>
+                                <th>学生数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classesList">
+                            <!-- クラスリストがここに表示される -->
+                        
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                <!-- Accounts Management -->
+                <div id="accounts" class="page">
+                    <h2>アカウント管理</h2>
+                    <button class="btn btn-primary" onclick="openAccountModal()">アカウントを作成</button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ロール</th>
+                                <th>名前</th>
+                                <th>メール</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountsList">
+                            <!-- account list displayed here -->
+                        </tbody>
+                    </table>
+                </div> 
+
+                <!-- 時間割管理 -->
+                
+                <div id="timetable" class="page">
+                    <h2>時間割管理</h2>
+                    <button class="btn btn-primary" onclick="openTimetableModal()">時間割を追加</button>
+                    
+                    <div id="timetableList"></div>
+                </div>
+
+                <!-- お知らせ作成 -->
+              
+                <div id="notices" class="page">
+                    <h2>お知らせ作成</h2>
+                    <div class="card">
+                        <h3>新しいお知らせ</h3>
+                        <div class="form-group">
+                            <label>タイトル:</label>
+                            <input type="text" id="noticeTitle" placeholder="タイトルを入力">
+                        </div>
+                        <div class="form-group">
+                            <label>内容:</label>
+                            <textarea id="noticeContent" placeholder="内容を入力" rows="5"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="createNotice()">送信</button>
+                    </div>
+                </div>
+
+           
+                <!-- Attendance Status -->
+                <div id="attendance" class="page">
+                    <h2>出席状況</h2>
+                    <div class="form-group">
+                        <label>クラスを選択:</label>
+                        <select id="attendanceClassSelect" onchange="loadAttendanceData()">
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>学生名</th>
+                                <th>出席</th>
+                                <th>欠席</th>
+                                <th>遅刻</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceList">
+                           
+                            <!-- Attendance list displayed here -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル - 学生追加 -->
+   
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('studentModal')">&times;</span>
+            <h3>学生を追加</h3>
+            <div class="form-group">
+                <label>名前:</label>
+                <input type="text" id="studentName" placeholder="名前を入力">
+            </div>
+            <div class="form-group">
+                <label>メール:</label>
+                <input type="email" id="studentEmail" placeholder="メールを入力">
+            </div>
+            <div class="form-group">
+                <label>クラス:</label>
+                <select id="studentClass">
+                    <option value="">選択してください</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="addStudent()">追加</button>
+        </div>
+    </div>
+
+    <!-- モーダル - 教師追加 -->
+   
+    <div id="teacherModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('teacherModal')">&times;</span>
+            <h3>教師を追加</h3>
+            <div class="form-group">
+                <label>名前:</label>
+                <input type="text" id="teacherName" placeholder="名前を入力">
+            </div>
+            <div class="form-group">
+                <label>メール:</label>
+                <input type="email" id="teacherEmail" placeholder="メールを入力">
+            </div>
+            <div class="form-group">
+                <label>担当科目:</label>
+                <input type="text" id="teacherSubject" placeholder="科目を入力">
+            </div>
+            <button class="btn btn-primary" onclick="addTeacher()">追加</button>
+        </div>
+    </div>
+
+    <!-- モーダル - クラス作成 -->
+    
+    <div id="classModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('classModal')">&times;</span>
+            <h3>クラスを作成</h3>
+            <div class="form-group">
+                <label>クラス名:</label>
+                <input type="text" id="className" placeholder="クラス名を入力">
+            </div>
+            <div class="form-group">
+                <label>担任:</label>
+                <select id="classTeacher">
+                    <option value="">選択してください</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="addClass()">作成</button>
+        </div>
+    </div>
+
+    <!-- モーダル - アカウント追加/編集 -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('accountModal')">&times;</span>
+            <h3>アカウントを作成 / 編集</h3>
+            <input type="hidden" id="accountEditIndex" value="-1">
+            <div class="form-group">
+                <label>ロール:</label>
+                <select id="accountRole">
+                    <option value="">選択してください</option>
+                    <option value="admin">管理者</option>
+                    <option value="teacher">教師</option>
+                    <option value="student">学生</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>名前:</label>
+                <input type="text" id="accountName" placeholder="フルネームを入力">
+            </div>
+            <div class="form-group">
+                <label>メール:</label>
+                <input type="email" id="accountEmail" placeholder="メールアドレスを入力">
+            </div>
+            <div class="form-group">
+                <label>パスワード (新規の場合必須):</label>
+                <input type="password" id="accountPassword" placeholder="パスワードを入力">
+            </div>
+            <button class="btn btn-primary" onclick="saveAccount()">保存</button>
+        </div>
+    </div>
+
+    <!-- モーダル - 時間割追加/編集 -->
+    <div id="timetableModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('timetableModal')">&times;</span>
+            <h3>時間割を追加 / 編集</h3>
+            <input type="hidden" id="timetableEditIndex" value="-1">
+            <div class="form-group">
+                <label>曜日:</label>
+                <select id="timetableDay">
+                    <option value="月">月</option>
+                    <option value="火">火</option>
+                    <option value="水">水</option>
+                    <option value="木">木</option>
+                    <option value="金">金</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>時間帯:</label>
+                <input type="text" id="timetableTime" placeholder="例: 09:00-10:00">
+            </div>
+            <div class="form-group">
+                <label>クラス:</label>
+                <select id="timetableClass">
+                    <option value="">選択してください</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>科目:</label>
+                <input type="text" id="timetableSubject" placeholder="科目を入力">
+            </div>
+            <div class="form-group">
+                <label>教師:</label>
+                <select id="timetableTeacher">
+                    <option value="">選択してください</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="saveTimetableEntry()">保存</button>
+        </div>
+    </div>
+
+<!-- フッター -->
+<footer class="site-footer1">
+    <p>
+        © <span id="footerYear"></span> 学生管理システム |
+        <a href="https://www.tuis.ac.jp/" target="_blank">東京情報大学</a>
+         <p> Its a Model Page for Software Competition</p>
+    </p>
+</footer>
+
+    <script src="../js/helper.js"></script>
+    <script src="../js/role-check.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

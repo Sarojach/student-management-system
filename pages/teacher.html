@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教師ダッシュボード</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/teacher.css">
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <div class="navbar">
+        <h2>学校管理システム - 教師</h2>
+        <div class="user-section">
+            <span class="user-name" id="userName">ユーザー</span>
+            <button class="btn btn-secondary" onclick="logout()">ログアウト</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="layout">
+            <!-- サイドバー -->
+            <div class="sidebar">
+                <h3>メニュー</h3>
+                <a class="sidebar-item active" data-page="dashboard" href="teacher.html#dashboard" target="_blank" rel="noopener">ダッシュボード</a>
+                <a class="sidebar-item" data-page="attendance" href="teacher.html#attendance" target="_blank" rel="noopener">出席管理</a>
+                <a class="sidebar-item" data-page="students" href="teacher.html#students" target="_blank" rel="noopener">学生一覧</a>
+                <a class="sidebar-item" data-page="timetable" href="teacher.html#timetable" target="_blank" rel="noopener">時間割</a>
+                <a class="sidebar-item" data-page="notices" href="teacher.html#notices" target="_blank" rel="noopener">お知らせ</a>
+            </div>
+
+            <!-- メインコンテンツ -->
+            <div class="main-content">
+
+                <!-- ダッシュボード -->
+                <div id="dashboard" class="page active">
+                    <h2>ダッシュボード</h2>
+                    <div class="card-grid">
+                        <div class="card clickable" onclick="showPage('students')" role="button" tabindex="0">
+                            <h3>担当クラス</h3>
+                            <p class="stat-number" id="assignedClass">-</p>
+                        </div>
+                        <div class="card clickable" onclick="showPage('students')" role="button" tabindex="0">
+                            <h3>クラスの学生数</h3>
+                            <p class="stat-number" id="classStudentCount">0</p>
+                        </div>
+                        <div class="card clickable" onclick="showPage('attendance')" role="button" tabindex="0">
+                            <h3>本日の出席コード</h3>
+                            <p class="stat-number" id="todayCode">-</p>
+                        </div> 
+                    </div>
+                </div>
+
+                <!-- 出席管理 -->
+                <div id="attendance" class="page">
+                    <h2>出席管理</h2>
+                    <div class="card">
+                        <h3>出席コードを生成</h3>
+                        <p>出席コードを生成してください。学生はこのコードを入力して出席を記録します。</p>
+                        <button class="btn btn-primary" onclick="generateAttendanceCode()">コードを生成</button>
+                        <div id="codeDisplay" class="code-display" style="display: none;">
+                            <p style="font-size: 14px; margin-bottom: 10px;">現在のコード:</p>
+                            <p id="displayCode" style="font-size: 32px; margin: 0;"></p>
+                        </div>
+                        <button class="btn btn-danger" onclick="closeAttendance()" id="closeBtn" style="display: none;">出席を終了</button>
+                    </div>
+
+                    <h3>出席状況</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>学生名</th>
+                                <th>出席状況</th>
+                                <th>時刻</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceList">
+                            <!-- 出席リストがここに表示される -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 学生一覧 -->
+                <div id="students" class="page">
+                    <h2>学生一覧</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>学生ID</th>
+                                <th>名前</th>
+                                <th>メール</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsList">
+                            <!-- 学生リストがここに表示される -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 時間割 -->
+                <div id="timetable" class="page">
+                    <h2>時間割</h2>
+                    <div id="timetableContent"></div>
+                </div>
+
+                <!-- お知らせ -->
+                <div id="notices" class="page">
+                    <h2>お知らせ</h2>
+                    <button class="btn btn-primary" onclick="openNoticeModal()">お知らせを作成</button>
+                    <div id="noticesList"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル - お知らせ作成 -->
+    <div id="noticeModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('noticeModal')">&times;</span>
+            <h3>お知らせを作成</h3>
+            <div class="form-group">
+                <label>タイトル:</label>
+                <input type="text" id="noticeTitle" placeholder="タイトルを入力">
+            </div>
+            <div class="form-group">
+                <label>内容:</label>
+                <textarea id="noticeContent" placeholder="内容を入力" rows="5"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="createNotice()">作成</button>
+        </div>
+    </div>
+
+<!-- フッター -->
+<footer class="site-footer1">
+    <p>
+        © <span id="footerYear"></span> 学生管理システム |
+        <a href="https://www.tuis.ac.jp/" target="_blank">東京情報大学</a>
+         <p> Its a Model Page for Software Competition</p>
+    </p>
+</footer>
+
+    <script src="../js/helper.js"></script>
+    <script src="../js/role-check.js"></script>
+    <script src="../js/teacher.js"></script>
+</body>
+</html>

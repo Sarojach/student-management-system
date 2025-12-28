@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生ダッシュボード</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/student.css">
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <div class="navbar">
+        <h2>学校管理システム - 学生</h2>
+        <div class="user-section">
+            <span class="user-name" id="userName">ユーザー</span>
+            <button class="btn btn-secondary" onclick="logout()">ログアウト</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="layout">
+            <!-- サイドバー -->
+            <div class="sidebar">
+                <h3>メニュー</h3>
+                <a class="sidebar-item active" data-page="dashboard" href="student.html#dashboard" target="_blank" rel="noopener">ダッシュボード</a>
+                <a class="sidebar-item" data-page="attendance" href="student.html#attendance" target="_blank" rel="noopener">出席管理</a>
+                <a class="sidebar-item" data-page="attendanceRecord" href="student.html#attendanceRecord" target="_blank" rel="noopener">出席記録</a>
+                <a class="sidebar-item" data-page="timetable" href="student.html#timetable" target="_blank" rel="noopener">時間割</a>
+                <a class="sidebar-item" data-page="notices" href="student.html#notices" target="_blank" rel="noopener">お知らせ</a>
+            </div>
+
+            <!-- メインコンテンツ -->
+            <div class="main-content">
+
+                <!-- ダッシュボード -->
+                <div id="dashboard" class="page active">
+                    <h2>ダッシュボード</h2>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>所属クラス</h3>
+                            <p class="stat-number" id="studentClass">-</p>
+                        </div>
+                        <div class="card">
+                            <h3>出席回数</h3>
+                            <p class="stat-number" id="presentCount">0</p>
+                        </div>
+                        <div class="card">
+                            <h3>欠席回数</h3>
+                            <p class="stat-number" id="absentCount">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 出席管理 -->
+                <div id="attendance" class="page">
+                    <h2>出席管理</h2>
+                    <div class="card">
+                        <h3>出席コードを入力</h3>
+                        <p>教師から提供された6文字のコードを入力してください。</p>
+                        <div class="form-group">
+                            <label>出席コード:</label>
+                            <input type="text" id="attendanceCode" placeholder="例: ABC123" maxlength="6" style="text-transform: uppercase;">
+                        </div>
+                        <button class="btn btn-primary" onclick="submitAttendance()">出席を記録</button>
+                        <div id="attendanceMessage" class="alert" style="display: none; margin-top: 15px;"></div>
+                    </div>
+                </div>
+
+                <!-- 出席記録 -->
+                <div id="attendanceRecord" class="page">
+                    <h2>出席記録</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>日付</th>
+                                <th>状態</th>
+                                <th>時刻</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceHistory">
+                            <!-- 出席履歴がここに表示される -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 時間割 -->
+                <div id="timetable" class="page">
+                    <h2>時間割</h2>
+                    <div id="timetableContent"></div>
+                </div>
+
+                <!-- お知らせ -->
+                <div id="notices" class="page">
+                    <h2>お知らせ</h2>
+                    <div id="noticesList"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<!-- フッター -->
+<footer class="site-footer1">
+    <p>
+        © <span id="footerYear"></span> 学生管理システム |
+        <a href="https://www.tuis.ac.jp/" target="_blank">東京情報大学</a>
+         <p> Its a Model Page for Software Competition</p>
+    </p>
+</footer>
+
+    <script src="../js/helper.js"></script>
+    <script src="../js/role-check.js"></script>
+    <script src="../js/student.js"></script>
+</body>
+</html>

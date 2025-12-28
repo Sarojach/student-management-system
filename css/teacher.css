@@ -1,0 +1,155 @@
+/* ============================================
+   Teacher Dashboard Styles - 教師ダッシュボードスタイル
+   ============================================ */
+
+/* 統計数値 */
+/* Statistics Numbers */
+.stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #28a745;
+    margin: 10px 0 0 0;
+}
+
+/* コード表示 */
+/* Code Display */
+.code-display {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+}
+
+.code-display p {
+    margin: 10px 0;
+}
+
+.code-display p:first-child {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+/* モーダル */
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.modal-content h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    margin-top: -15px;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+/* 入力フォーム */
+/* Input Forms */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+}
+
+/* テーブル */
+/* Table Styles */
+.table tbody tr:hover {
+    background: #f0fdf4;
+}
+
+/* カード */
+/* Cards */
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    color: #28a745;
+    margin-bottom: 15px;
+}
+
+/* 出席コード説明 */
+/* Attendance Code Description */
+.card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* レスポンシブ対応 */
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+    
+    .code-display {
+        padding: 20px;
+    }
+}

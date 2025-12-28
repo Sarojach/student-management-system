@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学校管理システム</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+             <h1> 学生管理システム</h1>
+            <p class="subtitle">ログインして続行してください</p>
+
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>ロールを選択してください:</label>
+                    <div class="role-options">
+                        <button type="button" class="role-btn" data-role="admin">管理者</button>
+                        <button type="button" class="role-btn" data-role="teacher">教師</button>
+                        <button type="button" class="role-btn" data-role="student">学生</button>
+                    </div>
+                    <input type="hidden" id="selectedRole">
+                </div>
+
+                <div class="form-group">
+                    <label>メールアドレス:</label>
+                    <input type="email" id="email" placeholder="メールアドレスを入力" required>
+                </div>
+
+                <div class="form-group">
+                    <label>パスワード:</label>
+                    <input type="password" id="password" placeholder="パスワードを入力" required>
+                </div>
+
+                <button class="btn btn-primary" onclick="login()">ログイン</button>
+                <p class="switch-form">アカウントをお持ちでないですか？ <a href="#" onclick="toggleSignup(event)">新規登録</a></p>
+            </div>
+
+            <div id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label>ロールを選択してください:</label>
+                    <div class="role-options">
+                        <button type="button" class="role-btn" data-role="admin">管理者</button>
+                        <button type="button" class="role-btn" data-role="teacher">教師</button>
+                        <button type="button" class="role-btn" data-role="student">学生</button>
+                    </div>
+                    <input type="hidden" id="signupRole">
+                </div>
+
+                <div class="form-group">
+                    <label>フルネーム:</label>
+                    <input type="text" id="fullName" placeholder="フルネームを入力" required>
+                </div>
+
+                <div class="form-group">
+                    <label>メールアドレス:</label>
+                    <input type="email" id="signupEmail" placeholder="メールアドレスを入力" required>
+                </div>
+
+                <div class="form-group">
+                    <label>パスワード:</label>
+                    <input type="password" id="signupPassword" placeholder="パスワードを入力" required>
+                </div>
+
+                <button class="btn btn-primary" onclick="signup()">アカウントを作成</button>
+                <p class="switch-form">既にアカウントをお持ちですか？ <a href="#" onclick="toggleSignup(event)">ログイン</a></p>
+            </div>
+
+            <div id="alertBox" class="alert" style="display: none;"></div>
+        </div>
+    </div>
+<!-- フッター -->
+<footer class="site-footer">
+    <p>
+        © <span id="footerYear"></span> 学生管理システム |
+        <a href="https://www.tuis.ac.jp/" target="_blank">東京情報大学</a>
+         <p> Its a Model Page for Software Competition</p>
+    </p>
+</footer>
+
+    <script src="firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
