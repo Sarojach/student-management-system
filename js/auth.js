@@ -39,33 +39,33 @@ function toggleSignup(e) {
 }
 
 // アラートメッセージを表示する関数
-// Display alert message function
+
 function showAlert(message, type) {
     const alert = document.getElementById('alertBox');
     alert.className = 'alert alert-' + type;
     alert.textContent = message;
     alert.style.display = 'block';
     
-    // 3秒後に自動的にアラートを非表示
+    
     // Auto hide alert after 3 seconds
     setTimeout(() => alert.style.display = 'none', 3000);
 }
 
-// ログイン機能
-// Login function (validate against accounts)
+
+// Login function 
 function login() {
     const role = document.getElementById('selectedRole').value;
     const email = (document.getElementById('email').value || '').trim().toLowerCase();
     const password = document.getElementById('password').value || '';
 
-    // バリデーション: すべてのフィールドが入力されているかチェック
-    // Validation: Check if all fields are filled
+    // すべてのフィールドが入力されているかチェック
+   
     if (!role || !email || !password) {
         showAlert('ロールを選択してメールアドレスとパスワードを入力してください', 'danger');
         return;
     }
 
-    // 認証: accountsにあるユーザーと照合
+    
     // Authenticate against accounts (case-insensitive email)
     const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
     const account = accounts.find(a => a.email && a.email.toLowerCase() === email && a.role === role);
@@ -86,7 +86,7 @@ function login() {
         return;
     }
 
-    // 認証成功: セッション情報を保存
+   
     // Authentication successful: set session
     localStorage.setItem('userRole', role);
     localStorage.setItem('userEmail', email);
@@ -106,7 +106,7 @@ function login() {
     }, 500);
 }
 
-// サインアップ機能
+
 // Signup function (Admin-only)
 function signup() {
     // Only an admin user (already logged in) can create accounts
@@ -120,8 +120,8 @@ function signup() {
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
 
-    // バリデーション: すべてのフィールドが入力されているかチェック
-    // Validation: Check if all fields are filled
+    
+    // Validation: Check if all fields are filledor not fille
     if (!role || !name || !email || !password) {
         showAlert('すべてのフィールドを入力してください', 'danger');
         return;

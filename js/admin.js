@@ -17,7 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     addClickableKeyHandlers();
 
     // refresh accounts list when accounts change (same window)
-    document.addEventListener('accountsUpdated', () => { if (document.getElementById('accounts')?.classList.contains('active')) loadAccounts(); });
+    document.addEventListener('accountsUpdated', () => {
+        if (document.getElementById('accounts')?.classList.contains('active')) loadAccounts();
+        // also refresh students/teachers pages if they're visible so account creation is reflected immediately
+        if (document.getElementById('students')?.classList.contains('active')) loadStudents();
+        if (document.getElementById('teachers')?.classList.contains('active')) loadTeachers();
+    });
     // handle cross-tab updates
     window.addEventListener('storage', (e) => { if (e.key === 'accounts') loadAccounts(); });
 
@@ -92,14 +97,13 @@ function checkUserRole() {
 }
 
 // ユーザー名を読み込む
-// Load user name
+
 function loadUserName() {
     const email = localStorage.getItem('userEmail');
     document.getElementById('userName').textContent = email || 'ユーザー';
 }
 
 // ページを表示
-// Show page
 function showPage(pageName) {
     // Hide all pages
     document.querySelectorAll('.page').forEach(page => {
@@ -115,8 +119,7 @@ function showPage(pageName) {
     const pageEl = document.getElementById(pageName);
     if (pageEl) pageEl.classList.add('active');
 
-    // Mark the corresponding sidebar item active (supports programmatic calls)
-    // prefer data-page selector but fall back to inline onclick matching
+    // prefer data-page selector but fall back to inline onclick 
     const clickedBtn = document.querySelector(`.sidebar-item[data-page="${pageName}"]`) || document.querySelector(`.sidebar-item[onclick="showPage('${pageName}')"]`);
     if (clickedBtn) clickedBtn.classList.add('active');
 
@@ -150,7 +153,7 @@ function showPage(pageName) {
             loadClasses();
             break;
         case 'notices':
-            // no-op (admin creates notices manually)
+            loadNotices();
             break;
         default:
             break;
@@ -255,18 +258,17 @@ function loadTeachers() {
     });
     
     // 教師選択ドロップダウンを更新
-    // Update teacher selection dropdown
-    const select = document.getElementById('classTeacher');
-    select.innerHTML = '<option value="">選択してください</option>';
-    teachers.forEach((teacher, index) => {
-        const option = document.createElement('option');
-        option.value = index;
-        option.textContent = teacher.name;
-        select.appendChild(option);
+    const selects = document.querySelectorAll('#classTeacher, #timetableTeacher');
+    selects.forEach(select => {
+        select.innerHTML = '<option value="">選択してください</option>';
+        teachers.forEach((teacher, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = teacher.name;
+            select.appendChild(option);
+        });
     });
 }
-
-// 教師を追加
 // Add teacher
 function addTeacher() {
     const name = document.getElementById('teacherName').value;
@@ -277,7 +279,6 @@ function addTeacher() {
         alert('すべてのフィールドを入力してください');
         return;
     }
-    
     const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
     teachers.push({ name, email, subject });
     localStorage.setItem('teachers', JSON.stringify(teachers));
@@ -288,8 +289,6 @@ function addTeacher() {
     clearInputs(['teacherName', 'teacherEmail', 'teacherSubject']);
     alert('教師が追加されました');
 }
-
-// 教師を削除
 // Delete teacher
 function deleteTeacher(index) {
     if (confirm('この教師を削除してもよろしいですか？')) {
@@ -303,7 +302,7 @@ function deleteTeacher(index) {
 }
 
 // クラスを読み込む
-// Load classes
+
 function loadClasses() {
     const classes = JSON.parse(localStorage.getItem('classes')) || [];
     const tbody = document.getElementById('classesList');
@@ -326,9 +325,9 @@ function loadClasses() {
         tbody.appendChild(row);
     });
     
-    // クラス選択ドロップダウンを更新
-    // Update class selection dropdown
-    const selects = document.querySelectorAll('#studentClass, #attendanceClassSelect');
+   
+    // Update class selection 
+    const selects = document.querySelectorAll('#studentClass, #attendanceClassSelect, #timetableClass');
     selects.forEach(select => {
         select.innerHTML = '<option value="">選択してください</option>';
         classes.forEach((cls) => {
@@ -340,9 +339,9 @@ function loadClasses() {
     });
 }
 
-// ------------------------------
-// Timetable (時間割) 管理
-// ------------------------------
+
+// Timetable 
+
 function loadTimetable() {
     const timetable = JSON.parse(localStorage.getItem('timetable')) || [];
     const container = document.getElementById('timetableList');
@@ -461,9 +460,9 @@ function saveTimetableEntry() {
     }
 
     localStorage.setItem('timetable', JSON.stringify(timetable));
-    // notify other parts of the app in this window
+    // notify other parts of the app
     document.dispatchEvent(new CustomEvent('timetableUpdated', { detail: { source: 'admin' } }));
-    // close modal and refresh admin UI
+    // close modal and refresh admin 
     closeModal('timetableModal');
     loadTimetable();
 }
@@ -473,12 +472,11 @@ function deleteTimetableEntry(index) {
     const timetable = JSON.parse(localStorage.getItem('timetable')) || [];
     timetable.splice(index, 1);
     localStorage.setItem('timetable', JSON.stringify(timetable));
-    // notify other parts of the app in this window
+    // notify other parts of
     document.dispatchEvent(new CustomEvent('timetableUpdated', { detail: { source: 'admin' } }));
     loadTimetable();
 }
 
-// クラスを追加
 // Add class
 function addClass() {
     const name = document.getElementById('className').value;
@@ -503,7 +501,6 @@ function addClass() {
     alert('クラスが作成されました');
 }
 
-// クラスを削除
 // Delete class
 function deleteClass(index) {
     if (confirm('このクラスを削除してもよろしいですか？')) {
@@ -517,7 +514,6 @@ function deleteClass(index) {
 }
 
 // お知らせを作成
-// Create notice
 function createNotice() {
     const title = document.getElementById('noticeTitle').value;
     const content = document.getElementById('noticeContent').value;
@@ -531,12 +527,55 @@ function createNotice() {
     notices.push({ title, content, date: new Date().toLocaleDateString('ja-JP') });
     localStorage.setItem('notices', JSON.stringify(notices));
     
+    // notify other pages and refresh list
+    document.dispatchEvent(new CustomEvent('noticesUpdated', { detail: { source: 'admin' } }));
+    loadNotices();
     clearInputs(['noticeTitle', 'noticeContent']);
     alert('お知らせが作成されました');
 }
+// Admin: load notices with delete option
+function loadNotices() {
+    const notices = JSON.parse(localStorage.getItem('notices')) || [];
+    const container = document.getElementById('noticesList');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    if (notices.length === 0) {
+        container.innerHTML = '<p style="color:#999;">お知らせがありません。</p>';
+        return;
+    }
+    
+    notices.forEach((notice, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.marginBottom = '10px';
+        card.innerHTML = `
+            <h3>${notice.title}</h3>
+            <p>${notice.content}</p>
+            <p style="font-size: 12px; color: #999;">作成日: ${notice.date}</p>
+            <div style="text-align: right;">
+                <button class="btn btn-small btn-danger" onclick="deleteNotice(${index})">削除</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function deleteNotice(index) {
+    if (!confirm('このお知らせを削除してもよろしいですか？')) return;
+    const notices = JSON.parse(localStorage.getItem('notices')) || [];
+    notices.splice(index, 1);
+    localStorage.setItem('notices', JSON.stringify(notices));
+    // notify other pages
+    document.dispatchEvent(new CustomEvent('noticesUpdated', { detail: { source: 'admin' } }));
+    loadNotices();
+}
+
+// refresh notices when created elsewhere in the app
+document.addEventListener('noticesUpdated', () => { if (document.getElementById('notices')?.classList.contains('active')) loadNotices(); });
+window.addEventListener('storage', (e) => { if (e.key === 'notices') loadNotices(); });
 
 // 出席データを読み込む
-// Load attendance data
 function loadAttendanceData() {
     const className = document.getElementById('attendanceClassSelect').value;
     if (!className) return;

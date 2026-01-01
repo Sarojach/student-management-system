@@ -358,11 +358,17 @@ function createNotice() {
     notices.push({ title, content, date: new Date().toLocaleDateString('ja-JP') });
     localStorage.setItem('notices', JSON.stringify(notices));
     
+    // notify other pages and refresh
+    document.dispatchEvent(new CustomEvent('noticesUpdated', { detail: { source: 'teacher' } }));
     loadNotices();
     closeModal('noticeModal');
     clearInputs(['noticeTitle', 'noticeContent']);
     alert('お知らせが作成されました');
 }
+
+// refresh notices when created elsewhere in the app
+document.addEventListener('noticesUpdated', () => { if (document.getElementById('notices')?.classList.contains('active')) loadNotices(); });
+window.addEventListener('storage', (e) => { if (e.key === 'notices') loadNotices(); });
 
 // モーダルを開く
 
