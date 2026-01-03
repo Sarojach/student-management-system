@@ -91,13 +91,11 @@ function getUserEmail() {
 }
 
 // ボタンをDisableにして処理中状態を表示
-// Disable button to show processing state
 function disableButton(buttonElement, text = '処理中...') {
     buttonElement.disabled = true;
     buttonElement.textContent = text;
 }
 
-// ボタンをEnableにして元のテキストに戻す
 // Enable button and restore original text
 function enableButton(buttonElement, text = 'アクション') {
     buttonElement.disabled = false;

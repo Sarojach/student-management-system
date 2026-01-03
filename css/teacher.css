@@ -1,8 +1,4 @@
-/* ============================================
-   Teacher Dashboard Styles - 教師ダッシュボードスタイル
-   ============================================ */
 
-/* 統計数値 */
 /* Statistics Numbers */
 .stat-number {
     font-size: 36px;
@@ -11,7 +7,6 @@
     margin: 10px 0 0 0;
 }
 
-/* コード表示 */
 /* Code Display */
 .code-display {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
@@ -34,7 +29,7 @@
     margin-bottom: 15px;
 }
 
-/* モーダル */
+
 /* Modal Styles */
 .modal {
     display: none;
@@ -79,7 +74,7 @@
     color: #333;
 }
 
-/* 入力フォーム */
+
 /* Input Forms */
 .form-group {
     margin-bottom: 20px;
@@ -108,15 +103,12 @@
     border-color: #28a745;
     box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
 }
-
-/* テーブル */
 /* Table Styles */
 .table tbody tr:hover {
     background: #f0fdf4;
 }
 
 /* カード */
-/* Cards */
 .card {
     background: white;
     border: 1px solid #ddd;
@@ -132,13 +124,11 @@
 }
 
 /* 出席コード説明 */
-/* Attendance Code Description */
 .card p {
     color: #666;
     line-height: 1.6;
 }
 
-/* レスポンシブ対応 */
 /* Responsive Design */
 @media (max-width: 768px) {
     .modal-content {

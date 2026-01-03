@@ -1,8 +1,4 @@
-/* ============================================
-   Admin Dashboard Styles - 管理者ダッシュボードスタイル
-   ============================================ */
 
-/* 統計数値 */
 /* Statistics Numbers */
 .stat-number {
     font-size: 36px;
@@ -11,7 +7,7 @@
     margin: 10px 0 0 0;
 }
 
-/* コード表示 */
+
 /* Code Display */
 .code-display {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -27,7 +23,7 @@
     margin: 5px 0;
 }
 
-/* モーダル */
+
 /* Modal Styles */
 .modal {
     display: none;
@@ -72,7 +68,7 @@
     color: #333;
 }
 
-/* ステータスバッジ */
+
 /* Status Badge */
 .status-badge {
     display: inline-block;
@@ -97,14 +93,14 @@
     color: #856404;
 }
 
-/* テーブルホバー効果 */
+
 /* Table Hover Effect */
 .table tbody tr:hover {
     background: #f0f4ff;
 }
 
 /* ボタングループ */
-/* Button Group */
+
 .btn-group {
     display: flex;
     gap: 10px;
@@ -112,7 +108,7 @@
 }
 
 /* 入力フォーム */
-/* Input Forms */
+
 .form-group {
     margin-bottom: 20px;
 }
@@ -143,7 +139,6 @@
     box-shadow: 0 0 5px rgba(102, 126, 234, 0.2);
 }
 
-/* レスポンシブ対応 */
 /* Responsive Design */
 @media (max-width: 768px) {
     .modal-content {

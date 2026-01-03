@@ -1,9 +1,3 @@
-// ============================================
-// Import: 学生機能 - Student Functions
-// ============================================
-
-// ページの初期化
-// Initialize page
 document.addEventListener('DOMContentLoaded', function() {
     // ensure sample data exists (also sets footer year)
     initializeSampleData();
@@ -87,7 +81,7 @@ function initHeadingButtons() {
 } 
 
 // ユーザーロールをチェック
-// Check user role
+
 function checkUserRole() {
     const role = localStorage.getItem('userRole');
     if (role !== 'student') {
@@ -96,13 +90,13 @@ function checkUserRole() {
 }
 
 // ユーザー名を読み込む
-// Load user name
+
 function loadUserName() {
     const email = localStorage.getItem('userEmail');
     document.getElementById('userName').textContent = email || 'ユーザー';
 }
 
-// ダッシュボードデータを読み込む
+
 // Load dashboard data
 function loadDashboardData() {
     const email = localStorage.getItem('userEmail');
@@ -113,7 +107,7 @@ function loadDashboardData() {
         document.getElementById('studentClass').textContent = student.class;
     }
     
-    // 出席統計を計算
+    
     // Calculate attendance statistics
     const attendanceHistory = JSON.parse(localStorage.getItem('myAttendance')) || [];
     const presentCount = attendanceHistory.filter(a => a.status === '出席').length;
@@ -124,7 +118,7 @@ function loadDashboardData() {
 }
 
 // ページを表示
-// Show page
+
 function showPage(pageName) {
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
@@ -167,7 +161,7 @@ function showPage(pageName) {
     }
 }
 
-// 出席を記録
+
 // Submit attendance
 function submitAttendance() {
     const code = document.getElementById('attendanceCode').value.trim().toUpperCase();
@@ -178,7 +172,6 @@ function submitAttendance() {
         return;
     }
     
-    // 有効なコードをチェック
     // Check if code is valid
     const attendanceCodes = JSON.parse(localStorage.getItem('attendanceCodes')) || [];
     const validCode = attendanceCodes.find(ac => ac.code === code && ac.isActive);
@@ -189,7 +182,6 @@ function submitAttendance() {
     }
     
     // 出席を記録
-    // Record attendance (per-user and global log)
     const myAttendance = JSON.parse(localStorage.getItem('myAttendance')) || [];
     const userEmail = localStorage.getItem('userEmail');
     const students = JSON.parse(localStorage.getItem('students')) || [];
@@ -222,14 +214,11 @@ function submitAttendance() {
     document.dispatchEvent(new CustomEvent('attendanceRecorded', { detail: { email: userEmail, class: me.class } }));
 
     // フォームをクリア
-    // Clear form
     document.getElementById('attendanceCode').value = '';
     
-    // 成功メッセージを表示
     // Show success message
     showAttendanceMessage('出席が記録されました！', 'success');
     
-    // ダッシュボードを更新
     // Update dashboard
     setTimeout(() => {
         loadDashboardData();
@@ -237,7 +226,6 @@ function submitAttendance() {
     }, 1000);
 }
 
-// 出席メッセージを表示
 // Show attendance message
 function showAttendanceMessage(message, type) {
     const messageDiv = document.getElementById('attendanceMessage');
@@ -251,7 +239,6 @@ function showAttendanceMessage(message, type) {
 }
 
 // 出席履歴を読み込む
-// Load attendance history
 function loadAttendanceHistory() {
     const attendance = JSON.parse(localStorage.getItem('myAttendance')) || [];
     const tbody = document.getElementById('attendanceHistory');
@@ -276,7 +263,6 @@ function loadAttendanceHistory() {
 }
 
 // お知らせを読み込む
-// Load notices
 function loadNotices() {
     const notices = JSON.parse(localStorage.getItem('notices')) || [];
     const container = document.getElementById('noticesList');
@@ -302,7 +288,6 @@ function loadNotices() {
     });
 }
 
-// 時間割を読み込む（学生用ビュー）
 // Load timetable for student
 function loadTimetableForStudent() {
     const timetable = JSON.parse(localStorage.getItem('timetable')) || [];
@@ -353,7 +338,6 @@ function loadTimetableForStudent() {
 }
 
 // ログアウト
-// Logout
 function logout() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userRole');

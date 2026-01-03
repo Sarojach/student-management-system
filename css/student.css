@@ -1,8 +1,4 @@
-/* ============================================
-   Student Dashboard Styles - 学生ダッシュボードスタイル
-   ============================================ */
 
-/* 統計数値 */
 /* Statistics Numbers */
 .stat-number {
     font-size: 36px;
@@ -11,7 +7,7 @@
     margin: 10px 0 0 0;
 }
 
-/* 入力フォーム */
+
 /* Input Forms */
 .form-group {
     margin-bottom: 20px;
@@ -40,7 +36,7 @@
     box-shadow: 0 0 5px rgba(23, 162, 184, 0.2);
 }
 
-/* アラートメッセージ */
+
 /* Alert Messages */
 .alert {
     padding: 15px;
@@ -61,7 +57,6 @@
     color: #721c24;
 }
 
-/* ステータスバッジ */
 /* Status Badge */
 .status-badge {
     display: inline-block;
@@ -81,7 +76,7 @@
     color: #721c24;
 }
 
-/* カード */
+
 /* Cards */
 .card {
     background: white;
@@ -103,12 +98,12 @@
 }
 
 /* テーブル */
-/* Table Styles */
+
 .table tbody tr:hover {
     background: #f0f9fa;
 }
 
-/* ボタン */
+
 /* Buttons */
 .btn-primary {
     background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
@@ -119,7 +114,7 @@
     box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
 }
 
-/* リスト */
+
 /* Lists */
 #noticesList {
     display: grid;
@@ -127,7 +122,7 @@
     gap: 20px;
 }
 
-/* レスポンシブ対応 */
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .stat-number {
